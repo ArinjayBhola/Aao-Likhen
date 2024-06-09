@@ -3,9 +3,15 @@ import AppBar from "../components/AppBar";
 import { BlogType, useBlogs } from "../hooks";
 import { useEffect, useState } from "react";
 import BlogCardSkeleton from "../components/BlogCardSkeleton";
-console.log("13:21");
+import { useNavigate } from "react-router-dom";
 
 const Blogs = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("token") === null) {
+      return navigate("/signin");
+    }
+  }, []);
   const [blog, setBlog] = useState<BlogType[]>([]);
   const blogData = useBlogs();
   useEffect(() => {

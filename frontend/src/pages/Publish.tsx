@@ -1,13 +1,19 @@
 import axios from "axios";
 import AppBar from "../components/AppBar";
 import { BACKEND_URL } from "../config";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const DraftPage = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("token") === null) {
+      return navigate("/signin");
+    }
+  });
+
   const [title, setTitle] = useState("");
   const [descritipion, setDescritipion] = useState("");
-  const navigate = useNavigate();
 
   const postBlog = async () => {
     const response = await axios.post(
