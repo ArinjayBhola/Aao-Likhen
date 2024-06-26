@@ -4,6 +4,7 @@ import Signin from "./pages/Signin";
 import Blog from "./pages/Blog";
 import Blogs from "./pages/Blogs";
 import Publish from "./pages/Publish";
+import MyBlog from "./pages/MyBlog";
 
 const App = () => {
   return (
@@ -33,6 +34,10 @@ const App = () => {
           <Route
             path="/publish"
             element={<Publish />}
+          />
+          <Route
+            path="/myblog"
+            element={<MyBlog />}
           />
         </Routes>
       </BrowserRouter>

@@ -26,6 +26,28 @@ blogRouter.use("/*", async (c, next) => {
   }
 });
 
+blogRouter.get("/myblog", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const authHeader = c.req.header("Authorization");
+  if (!authHeader) {
+    return c.status(411);
+  }
+  const decodedToken = await verify(authHeader, c.env.JWT_SECRET);
+
+  const user = await prisma.user.findMany({
+    where: {
+      id: decodedToken.id as string,
+    },
+    include: {
+      post: true,
+    },
+  });
+  return c.json(user);
+});
+
 blogRouter.post("/", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
