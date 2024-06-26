@@ -42,7 +42,7 @@ const MyBlog = () => {
                 authorName={a.name || "Anonymous"}
                 title={b.title}
                 content={b.content}
-                publishedDate="25 March 2016"
+                publishedDate="dd-mm-yyyy"
                 id={b.id}
               />
             ))}

@@ -8,7 +8,7 @@ const FullBlog = ({ blog }: { blog: BlogType }) => {
       <div className="grid grid-cols-12 px-10 py-5">
         <div className="col-span-8">
           <div className="text-3xl font-bold mb-2">{blog.title}</div>
-          <div className="text-gray-600 mb-4">Posted on August 24, 2023</div>
+          <div className="text-gray-600 mb-4">dd-mm-yyyy</div>
           <div className="prose">
             <p>{blog.content}</p>
           </div>

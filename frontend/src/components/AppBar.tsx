@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Avatar } from "./BlogCard";
+import { useUserBlog } from "../hooks";
 
 const AppBar = () => {
   const navigate = useNavigate();
@@ -7,6 +8,8 @@ const AppBar = () => {
     localStorage.removeItem("token");
     navigate("/signin");
   };
+  const blogData = useUserBlog();
+  console.log(blogData[0]?.name)
 
   return (
     <div className="border-b flex justify-between px-10 py-4">
@@ -33,7 +36,7 @@ const AppBar = () => {
           className="mr-4 focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
           Logout
         </button>
-        <Avatar name="Aromkaur" />
+        {blogData[0]?.name === undefined ? null : <Avatar name={blogData[0]?.name}/>}
       </div>
     </div>
   );
