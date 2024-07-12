@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import Quote from "../components/Quote";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SignupType } from "@arinjay_bhola/zod-common";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
@@ -13,6 +13,12 @@ const Signup = () => {
   });
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/blogs");
+    }
+  }, []);
 
   const sendRequest = async () => {
     try {

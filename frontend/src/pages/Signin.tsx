@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Quote from "../components/Quote";
 import { Link, useNavigate } from "react-router-dom";
 import { SigninType } from "@arinjay_bhola/zod-common";
@@ -12,6 +12,12 @@ const Signin = () => {
   });
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/blogs");
+    }
+  }, []);
 
   const sendRequest = async () => {
     try {
