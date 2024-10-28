@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-import Quote from "../components/Quote";
-import { Link, useNavigate } from "react-router-dom";
 import { SigninType } from "@arinjay_bhola/zod-common";
-import { BACKEND_URL } from "../config";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Quote from "../components/Quote";
+import { BACKEND_URL } from "../config";
 
 const Signin = () => {
+  const [loading, setLoading] = useState(false);
   const [postInputs, setPostInputs] = useState<SigninType>({
     email: "",
     password: "",
@@ -20,12 +21,24 @@ const Signin = () => {
   }, []);
 
   const sendRequest = async () => {
+    if (loading) return;
+
+    if (!postInputs.email || !postInputs.password) {
+      alert("Please enter email and password.");
+      return;
+    }
+
+    setLoading(true);
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/v1/user/signin`, postInputs);
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/user/signin`,
+        postInputs,
+      );
       const jwt = response.data;
       localStorage.setItem("token", jwt.token);
       navigate("/blogs");
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -37,12 +50,12 @@ const Signin = () => {
           <div className="min-h-screen flex justify-center items-center">
             <div className="p-8 rounded w-full max-w-md">
               <div className="text-center mb-8">
-                <h1 className="text-3xl font-extrabold text-gray-800 mb-2">Sign In</h1>
+                <h1 className="text-3xl font-extrabold text-gray-800 mb-2">
+                  Sign In
+                </h1>
                 <p className="text-sm text-gray-600">
                   Don't have an account?
-                  <Link
-                    to="/signup"
-                    className="text-gray-600 underline">
+                  <Link to="/signup" className="text-gray-600 underline">
                     Sign Up
                   </Link>
                 </p>
@@ -50,7 +63,9 @@ const Signin = () => {
 
               <div className="space-y-4">
                 <div>
-                  <div className="text-sm font-medium text-gray-700 mb-1">Email</div>
+                  <div className="text-sm font-medium text-gray-700 mb-1">
+                    Email
+                  </div>
                   <input
                     type="text"
                     className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none"
@@ -65,7 +80,9 @@ const Signin = () => {
                 </div>
 
                 <div>
-                  <div className="text-sm font-medium text-gray-700 mb-1">Password</div>
+                  <div className="text-sm font-medium text-gray-700 mb-1">
+                    Password
+                  </div>
                   <input
                     type="password"
                     className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none"
@@ -82,8 +99,10 @@ const Signin = () => {
                 <button
                   type="submit"
                   className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none"
-                  onClick={sendRequest}>
-                  Sign In
+                  onClick={sendRequest}
+                  disabled={loading}
+                >
+                  {loading ? "Signing In..." : "Sign In"}
                 </button>
               </div>
             </div>

@@ -1,9 +1,8 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useBlog } from "../hooks";
-import FullBlog from "../components/FullBlog";
-import AppBar from "../components/AppBar";
-import Spinner from "../components/Spinner";
 import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import FullBlog from "../components/FullBlog";
+import Spinner from "../components/Spinner";
+import { useBlog } from "../hooks";
 
 const Blog = () => {
   const navigate = useNavigate();
@@ -19,7 +18,6 @@ const Blog = () => {
   if (data.singleBlog === undefined)
     return (
       <div>
-        <AppBar />
         <div className="h-screen flex flex-col justify-center">
           <div className="flex justify-center">
             <Spinner />

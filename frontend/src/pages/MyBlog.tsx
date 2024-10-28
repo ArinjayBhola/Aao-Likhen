@@ -1,9 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import { UserBlogType, useUserBlog } from "../hooks";
 import { useEffect, useState } from "react";
-import AppBar from "../components/AppBar";
-import BlogCardSkeleton from "../components/BlogCardSkeleton";
+import { useNavigate } from "react-router-dom";
 import BlogCard from "../components/BlogCard";
+import BlogCardSkeleton from "../components/BlogCardSkeleton";
+import { UserBlogType, useUserBlog } from "../hooks";
 
 const MyBlog = () => {
   const navigate = useNavigate();
@@ -20,7 +19,6 @@ const MyBlog = () => {
   if (blogData.length === 0)
     return (
       <>
-        <AppBar />
         <div className="flex justify-center">
           <div>
             <BlogCardSkeleton />
@@ -32,7 +30,6 @@ const MyBlog = () => {
     );
   return (
     <div>
-      <AppBar />
       <div>
         {blog.map((a) => (
           <div key={a.id}>
